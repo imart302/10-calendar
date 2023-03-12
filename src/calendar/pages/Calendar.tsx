@@ -6,8 +6,9 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 import { addHours } from 'date-fns';
 import { localizer, messages } from '../../helpers';
+import { CalendarEvent } from '../components/CalendarEvent';
 
-interface IMEvent {
+export interface IMEvent {
   title: string,
   notes: string,
   start: Date,
@@ -19,7 +20,7 @@ interface IMEvent {
   },
 }
 
-const events = [
+const events : IMEvent[] = [
   {
     title: 'Cumpleaños del jefe',
     notes: 'Hay que comprar pastel',
@@ -30,7 +31,7 @@ const events = [
       _id: '123',
       name: 'Ivan',
     },
-  } as IMEvent,
+  },
 ];
 
 
@@ -49,7 +50,7 @@ export const Calendar = () => {
     <>
       <Navbar />
 
-      <div>
+      <div> 
         <ReactBigCalendar
           culture="es"
           localizer={localizer}
@@ -59,6 +60,9 @@ export const Calendar = () => {
           style={{ height: 'calc(100vh - 80px)' }}
           messages = {messages}
           eventPropGetter = {eventStyleGetter}
+          components={{
+            event: CalendarEvent
+          }}
         />
       </div>
     </>
