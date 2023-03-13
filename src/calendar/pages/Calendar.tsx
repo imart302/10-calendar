@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Navbar } from '../components';
-import { Calendar as ReactBigCalendar, EventPropGetter } from 'react-big-calendar';
+import { Calendar as ReactBigCalendar, EventPropGetter, View } from 'react-big-calendar';
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
@@ -35,15 +35,35 @@ const events : IMEvent[] = [
 ];
 
 
+export interface ICalendarSte {
+  lastView: View,
+}
+
 export const Calendar = () => {
 
+  const [ state, setState ] = useState<ICalendarSte>({
+    lastView: 'agenda'
+  })
+
   const eventStyleGetter : EventPropGetter<IMEvent> = (event: IMEvent, start: Date, end: Date, isSelected: boolean) => {
-    console.log(event, start, end, isSelected);
+
     return {
       style: {
         backgroundColor: '#3456ff',
       }
     }
+  }
+
+  const onSelectCalendar = (event: IMEvent, e: React.SyntheticEvent<HTMLElement, Event>) => {
+
+  }
+
+  const onDoubleClick = (event: IMEvent, e: React.SyntheticEvent<HTMLElement, Event>) => {
+
+  }
+
+  const onViewChange = (view: View) => {
+    console.log(view);
   }
 
   return (
@@ -54,6 +74,7 @@ export const Calendar = () => {
         <ReactBigCalendar
           culture="es"
           localizer={localizer}
+          defaultView={state.lastView}
           events={events}
           startAccessor="start"
           endAccessor="end"
@@ -63,6 +84,9 @@ export const Calendar = () => {
           components={{
             event: CalendarEvent
           }}
+          onSelectEvent = {onSelectCalendar}
+          onDoubleClickEvent = {onDoubleClick}
+          onView = {onViewChange}
         />
       </div>
     </>

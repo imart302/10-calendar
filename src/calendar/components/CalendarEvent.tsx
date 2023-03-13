@@ -7,9 +7,15 @@ export interface ICalendarEvent extends EventProps<IMEvent> {
 }
 
 export const CalendarEvent = (props: ICalendarEvent) => {
-  console.log(props);
 
   return (
-    <div>CalendarEvent</div>
+    <div>
+      <h5>
+        {props.event.title}
+      </h5>
+      <p>
+        {props.event.user.name}
+      </p>
+    </div>
   )
 }
