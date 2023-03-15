@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navbar } from '../components';
+import { CalendarModal, Navbar } from '../components';
 import { Calendar as ReactBigCalendar, EventPropGetter, View } from 'react-big-calendar';
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -89,6 +89,8 @@ export const Calendar = () => {
           onView = {onViewChange}
         />
       </div>
+
+      <CalendarModal></CalendarModal>
     </>
   );
 };
