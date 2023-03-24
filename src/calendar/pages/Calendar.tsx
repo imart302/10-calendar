@@ -1,51 +1,31 @@
 import React, { useState } from 'react';
-import { CalendarModal, Navbar } from '../components';
+import { CalendarModal, Fab, Navbar } from '../components';
 import { Calendar as ReactBigCalendar, EventPropGetter, View } from 'react-big-calendar';
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
-import { addHours } from 'date-fns';
+
 import { localizer, messages } from '../../helpers';
-import { CalendarEvent } from '../components/CalendarEvent';
-
-export interface IMEvent {
-  title: string,
-  notes: string,
-  start: Date,
-  end: Date,
-  bgColor: string,
-  user: {
-    _id: string,
-    name: string,
-  },
-}
-
-const events : IMEvent[] = [
-  {
-    title: 'Cumpleaños del jefe',
-    notes: 'Hay que comprar pastel',
-    start: new Date(),
-    end: addHours(new Date(), 2),
-    bgColor: '#fafafa',
-    user: {
-      _id: '123',
-      name: 'Ivan',
-    },
-  },
-];
+import { CalendarEventView } from '../components/CalendarEventView';
+import { useUIStore } from '../../hooks';
+import { useCalendarStore } from '../../hooks/useCalendarStore';
+import { ICalendarEventNotSerializable } from '../../types';
 
 
-export interface ICalendarSte {
+
+export interface ICalendarModalSte {
   lastView: View,
 }
 
 export const Calendar = () => {
+  const { calendarEvents, setActiveCalendarEvent, deserializedEvents, serializeEvents } = useCalendarStore();
+  const { openDateModal } = useUIStore();
 
-  const [ state, setState ] = useState<ICalendarSte>({
+  const [ state, setState ] = useState<ICalendarModalSte>({
     lastView: 'agenda'
   })
 
-  const eventStyleGetter : EventPropGetter<IMEvent> = (event: IMEvent, start: Date, end: Date, isSelected: boolean) => {
+  const eventStyleGetter : EventPropGetter<ICalendarEventNotSerializable> = (event: ICalendarEventNotSerializable, start: Date, end: Date, isSelected: boolean) => {
 
     return {
       style: {
@@ -54,12 +34,14 @@ export const Calendar = () => {
     }
   }
 
-  const onSelectCalendar = (event: IMEvent, e: React.SyntheticEvent<HTMLElement, Event>) => {
+  const onSelectCalendar = (event: ICalendarEventNotSerializable, e: React.SyntheticEvent<HTMLElement, Event>) => {
 
   }
 
-  const onDoubleClick = (event: IMEvent, e: React.SyntheticEvent<HTMLElement, Event>) => {
-
+  const onDoubleClick = (event: ICalendarEventNotSerializable, e: React.SyntheticEvent<HTMLElement, Event>) => {
+    const [ event2 ] = serializeEvents([event]);
+    setActiveCalendarEvent(event2);
+    openDateModal();
   }
 
   const onViewChange = (view: View) => {
@@ -75,14 +57,14 @@ export const Calendar = () => {
           culture="es"
           localizer={localizer}
           defaultView={state.lastView}
-          events={events}
+          events={deserializedEvents}
           startAccessor="start"
           endAccessor="end"
           style={{ height: 'calc(100vh - 80px)' }}
           messages = {messages}
-          eventPropGetter = {eventStyleGetter}
+          eventPropGetter = { eventStyleGetter }
           components={{
-            event: CalendarEvent
+            event: CalendarEventView,
           }}
           onSelectEvent = {onSelectCalendar}
           onDoubleClickEvent = {onDoubleClick}
@@ -91,6 +73,7 @@ export const Calendar = () => {
       </div>
 
       <CalendarModal></CalendarModal>
+      <Fab />
     </>
   );
 };
