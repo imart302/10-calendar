@@ -1,4 +1,4 @@
-.login-container{
+/* .login-container{
   margin-top: 15%;
 }
 .login-form-1{
@@ -48,4 +48,69 @@
   color: #0062cc;
   font-weight: 600;
   text-decoration: none;
+} */
+
+
+div.main-container {
+  padding: 10;
+  margin: 40px auto;
+  border: 1px solid rgb(148, 148, 148);
+  border-radius: 2%;
+  height: 400px;
+  width: 300px;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.form-container {
+  margin-top: 30px;
+  width: 100%;
+  display: inline;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-container > form {
+  width: 300px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  justify-content: center;
+  align-content: center;
+}
+
+.form-container-login {
+  transform: translateX(-300px);
+  transition: 0.3s;
+}
+
+.form-container-login-active {
+  transform: translateX(0);
+  transition: 0.3s;
+}
+
+.form-container-register {
+  transform: translateX(0);
+  transition: 0.3s;
+}
+
+.form-container-register-active {
+  transform: translateX(-300px);
+  transition: 0.3s;
+}
+
+.form-group {
+  margin-top: 5px;
+}
+
+.form-group-aux {
+  display: flex;
+  justify-content: space-around;
+}
+
+div.form-container button.btn-submit {
+  width: 100%;
 }

@@ -1,0 +1,15 @@
+
+div.simple-spinner {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border: 2px solid #727272;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spinner 0.6s linear infinite;
+}
+
+@keyframes spinner {
+  0%  {transform: rotate(0deg);}
+  100% {transform: rotate(360deg);}
+}

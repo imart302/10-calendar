@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { authReducer } from './auth';
 
 import { caledarReducer } from './calendar';
 import { uiReducer } from './ui';
@@ -10,6 +11,7 @@ const store = configureStore({
   reducer: {
     ui: uiReducer,
     calendar: caledarReducer,
+    auth: authReducer,
   },
 });
 
