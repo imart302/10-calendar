@@ -5,10 +5,8 @@ import Modal from 'react-modal';
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Swal from 'sweetalert2';
-import { useUIStore, useCalendarStore } from '../../hooks';
+import { useUIStore, useCalendarStore, useAuthStore } from '../../hooks';
 import { ICalendarEvent, ICalendarEventNew } from '../../types';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
 
 import 'sweetalert2/dist/sweetalert2.min.css';
 
@@ -47,7 +45,7 @@ export const CalendarModal = () => {
     updateEvent,
     deleteEvent,
   } = useCalendarStore();
-  const auth = useSelector((state: RootState) => state.auth);
+  const { auth } = useAuthStore();
 
   const [state, setState] = React.useState<CalendarModalSte>({
     form: {
@@ -167,7 +165,7 @@ export const CalendarModal = () => {
     const difference = differenceInSeconds(state.form.end, state.form.start);
 
     if (isNaN(difference) || difference < 0) {
-      Swal.fire('Fechas incorrectas', 'Revisar las fechas');
+      Swal.fire('Intervalo de fechas no valido', 'Revisar las fechas');
       return;
     }
 
@@ -185,7 +183,6 @@ export const CalendarModal = () => {
       };
 
       updateEvent(updatedEvent);
-
     } else {
       const newEvent: ICalendarEventNew = {
         title: state.form.title,
@@ -197,7 +194,6 @@ export const CalendarModal = () => {
       };
 
       createNewEvent(newEvent);
-
     }
 
     setState((actual) => {
@@ -267,7 +263,6 @@ export const CalendarModal = () => {
             onChange={onInputChange}
             value={state.form.title}
           />
-
         </div>
 
         <div className="form-group mb-2">
@@ -280,7 +275,6 @@ export const CalendarModal = () => {
             onChange={onTextAreaChange}
             value={state.form.notes}
           ></textarea>
-
         </div>
 
         <div

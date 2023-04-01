@@ -13,9 +13,8 @@ export const startLogin = createAsyncThunk<
 >('auth/login', async (user: ILoginUser): Promise<IUserLogged> => {
   
   const loggedUser = await login(user);
-  console.log(loggedUser);
+
   return loggedUser;
-  
 });
 
 
@@ -27,7 +26,6 @@ export const buildStartLogin = (
   });
   builder.addCase(startLogin.fulfilled, loginReducer);
   builder.addCase(startLogin.rejected, (state, action) => {
-    console.log(action);
     state.state = 'no-auth';
     state.error = {
       where: 'login',
