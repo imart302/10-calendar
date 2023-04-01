@@ -4,8 +4,6 @@ import { authReducer } from './auth';
 import { caledarReducer } from './calendar';
 import { uiReducer } from './ui';
 
-// ...
-
 const store = configureStore({
 
   reducer: {

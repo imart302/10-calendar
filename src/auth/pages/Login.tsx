@@ -1,9 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './login.css';
 import { useForm, Resolver } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
-import { startLogin } from '../../store/auth';
+import { resetError, resetLogin, startLogin } from '../../store/auth';
 import { ICreateUser, ILoginUser } from '../../types';
 import { SimpleSpinner } from '../../ui/components/SimpleSpinner';
 import { useAuthStore } from '../../hooks/useAuthStore';
@@ -76,20 +76,60 @@ export const Login = () => {
   });
 
   const handleSwitchToCreateAccount = () => {
-
+    console.log('handleSwitchCreate');
     registerContainer.current?.classList.add('form-container-register-active');
     loginContainer.current?.classList.remove('form-container-login-active');
-  }
+  };
 
   const handleSwitchToLogin = () => {
-    registerContainer.current?.classList.remove('form-container-register-active');
+    console.log('handleSwitchLogin');
+    registerContainer.current?.classList.remove(
+      'form-container-register-active'
+    );
     loginContainer.current?.classList.add('form-container-login-active');
+  };
+
+  useEffect(() => {
+    if (auth.state === 'created') {
+      Swal.fire('Usuario creado').then(() => {
+        dispatch(resetLogin());
+      });
+    }
+
+    if (auth.error) {
+      if (auth.error.where === 'login') {
+        Swal.fire('Email o password incorrectos').then(() => {
+          dispatch(resetError());
+        });
+      }
+    }
+  }, [auth.state]);
+
+  if (auth.state === 'renew') {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          justifyItems: 'center',
+          alignContent: 'center',
+          alignItems: 'center',
+          height: '100%',
+          marginTop: '40%'
+        }}
+      >
+        <SimpleSpinner />
+      </div>
+    );
   }
 
   return (
     <div className="main-container">
       {/* LOGIN */}
-      <div ref={loginContainer} className="form-container form-container-login form-container-login-active">
+      <div
+        ref={loginContainer}
+        className="form-container form-container-login form-container-login-active"
+      >
         <h3>Ingreso</h3>
         <form onSubmit={onSubmitLogin}>
           <div className="form-group mb-2">
@@ -113,7 +153,7 @@ export const Login = () => {
             />
           </div>
           <div className="form-group mb-2">
-            {auth.state === 'fetching' ? (
+            {auth.state === 'creating' || auth.state === 'fetching' ? (
               <SimpleSpinner />
             ) : (
               <button type="submit" className="btn btn-primary btn-submit">
@@ -122,13 +162,21 @@ export const Login = () => {
             )}
           </div>
           <div className="form-group form-group-aux mb-2">
-              <span>No tiene una cuenta <a href='#' onClick={handleSwitchToCreateAccount}>Crear una cuenta</a></span>
+            <span>
+              No tiene una cuenta{' '}
+              <a href="#" onClick={handleSwitchToCreateAccount}>
+                Crear una cuenta
+              </a>
+            </span>
           </div>
         </form>
       </div>
 
       {/* REGISTER */}
-      <div ref={registerContainer} className="form-container form-container-register">
+      <div
+        ref={registerContainer}
+        className="form-container form-container-register"
+      >
         <h3>Registro</h3>
         <form onSubmit={onSubmitRegister}>
           <div className="form-group mb-2">
@@ -176,7 +224,7 @@ export const Login = () => {
           </div>
 
           <div className="form-group mb-2">
-            {auth.state === 'creating' ? (
+            {auth.state === 'creating' || auth.state === 'fetching' ? (
               <SimpleSpinner />
             ) : (
               <button type="submit" className="btn btn-primary btn-submit">
@@ -185,8 +233,10 @@ export const Login = () => {
             )}
           </div>
           <div className="form-group form-group-aux mb-2">
-              <span>Ya tiene cuenta? </span>
-              <a href='#' onClick={handleSwitchToLogin}>Inicie sesion</a>
+            <span>Ya tiene cuenta? </span>
+            <a href="#" onClick={handleSwitchToLogin}>
+              Inicie sesion
+            </a>
           </div>
         </form>
       </div>

@@ -1,4 +1,4 @@
-import { IUser } from "./storeTypes";
+import { ICalendarEvent, IUser } from "./storeTypes";
 
 export interface IUserCreated {
   ok: boolean;
@@ -18,5 +18,19 @@ export interface IRenewToken {
   user: IUser,
 }
 
+export interface ICalendarEventsPaginated {
+  ok: boolean; 
+  pagination: {
+    page: number;
+    offset: number;
+    count: number;
+    remaining: number;
+    data: ICalendarEvent[];
+  }
+}
 
+export interface ICalendarDeleteEvent {
+  ok: boolean;
+  deleted: number;
+}
 

@@ -1,8 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { IAuthState } from '../../types';
-import { resetLoginReducer, loginReducer } from './reducers';
-import { buildStartLogin } from './thunks';
-import { buildStartRegister } from './thunks/startRegister';
+import { resetLoginReducer, loginReducer, resetErrorReducer } from './reducers';
+import { buildStartLogin, buildStartRegister, buildStartRenewToken } from './thunks';
 
 
 const initialState : IAuthState = {
@@ -12,20 +11,23 @@ const initialState : IAuthState = {
   token: null,
 }
 
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
     login: loginReducer,
     resetLogin: resetLoginReducer,
+    resetError: resetErrorReducer,
   },
   extraReducers(builder) {
     buildStartLogin(builder);
     buildStartRegister(builder);
+    buildStartRenewToken(builder);
   },
   
 });
 
 
-export const { login, resetLogin } = authSlice.actions
+export const { login, resetLogin, resetError } = authSlice.actions
 export const authReducer =  authSlice.reducer

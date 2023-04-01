@@ -1,27 +1,24 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { addHours } from 'date-fns';
-import { ICalendarEventNew, ICalendarState } from '../../types';
-import { ICalendarEvent } from '../../types';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ICalendarState, ICalendarEvent } from '../../types';
+import {
+  addNewEventReducer,
+  setEventsReducer,
+  updateEventReducer,
+  deleteEventReducer,
+} from './reducers';
+import {
+  buildStartCreateEvent,
+  buildStartDeleteEvent,
+  buildStartFetchEvents,
+  buildStartUpdateEvent,
+} from './thunks';
 
-const tempEvent : ICalendarEvent[] = [
-  {
-    _id: "AW",
-    title: 'Cumpleaños nose',
-    notes: 'Hay que comprar pastel',
-    start: (new Date()).toISOString(),
-    end: addHours(new Date(), 2).toISOString(),
-    bgColor: '#fafafa',
-    user: {
-      _id: '123',
-      name: 'Ivan',
-    },
-  },
-]
-
-const initialState : ICalendarState = {
-  events: tempEvent,
+const initialState: ICalendarState = {
+  events: [],
   activeEvent: null,
-}
+  error: null,
+  status: 'idle',
+};
 
 const calendarSlice = createSlice({
   name: 'calendar',
@@ -31,31 +28,26 @@ const calendarSlice = createSlice({
       state.activeEvent = action.payload;
     },
 
-    onAddNewEvent: (state, action: PayloadAction<ICalendarEventNew>) => {
-      const event : ICalendarEvent = {
-        ...action.payload,
-        _id: Math.random().toString(2).slice(0, 6),
-      }
-      state.events.push(event);
-    },
-
-    onUpdateEvent: (state, action: PayloadAction<ICalendarEvent>) => {
-      const newevents = state.events.map((ev) => {
-        if(ev._id === action.payload._id) return action.payload;
-        else return ev;
-      });
-
-      state.events = newevents;
-    },
-
-    onDeleteEvent: (state, action: PayloadAction<ICalendarEvent>) => {
-      state.events = state.events.filter(ev => ev._id !== action.payload._id);
-    },
+    addNewEvent: addNewEventReducer,
+    setEvents: setEventsReducer,
+    updateEvent: updateEventReducer,
+    deleteEvent: deleteEventReducer,
   },
 
+  extraReducers(builder) {
+    buildStartCreateEvent(builder);
+    buildStartFetchEvents(builder);
+    buildStartUpdateEvent(builder);
+    buildStartDeleteEvent(builder);
+  },
 });
 
-
-export const calendarInitState  = calendarSlice.getInitialState();
-export const { onSetActiveEvent, onAddNewEvent, onUpdateEvent, onDeleteEvent } = calendarSlice.actions
-export const caledarReducer =  calendarSlice.reducer
+export const calendarInitState = calendarSlice.getInitialState();
+export const {
+  onSetActiveEvent,
+  addNewEvent,
+  setEvents,
+  updateEvent,
+  deleteEvent,
+} = calendarSlice.actions;
+export const caledarReducer = calendarSlice.reducer;

@@ -24,9 +24,13 @@ export const buildStartRegister = (
     state.state = 'creating';
   });
   builder.addCase(startRegister.fulfilled, (state) => {
-    state.state = 'no-auth';
+    state.state = 'created';
   });
   builder.addCase(startRegister.rejected, (state, action) => {
-    state.error = action.error.message ?? 'Unknown error';
+    state.error = {
+      where: 'register',
+      message: action.error.message ?? 'Unknown error',
+      code: action.error.code ?? 'Unknown error',
+    };
   });
 };

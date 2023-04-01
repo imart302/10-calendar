@@ -1,7 +1,9 @@
 import { formatISO, parseISO } from 'date-fns';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { startCreateEvent, startDeleteEvent, startUpdateEvent } from '../store';
 import { onAddNewEvent, onDeleteEvent, onSetActiveEvent, onUpdateEvent } from '../store/calendar/calendarSlice';
+import { startFetchEvents } from '../store/calendar/thunks/startFetchEvents';
 import store, { RootState } from '../store/store'
 import { ICalendarEvent, ICalendarEventNotSerializable, ICalendarEventNew } from '../types';
 
@@ -26,6 +28,22 @@ export const useCalendarStore = () => {
 
   const startDeleteCalendarEvent = async (event: ICalendarEvent) => {
     dispatch(onDeleteEvent(event));
+  }
+
+  const createNewEvent = (event: ICalendarEventNew) => {
+    dispatch(startCreateEvent(event));
+  }
+
+  const fetchEvents = () => {
+    dispatch(startFetchEvents());
+  };
+
+  const updateEvent = (event: ICalendarEvent) => {
+    dispatch(startUpdateEvent(event));
+  }
+
+  const deleteEvent = (event: ICalendarEvent) => {
+    dispatch(startDeleteEvent(event));
   }
 
   const serializeEvents = (calendarEvents: ICalendarEventNotSerializable[]): ICalendarEvent[] => {
@@ -56,7 +74,7 @@ export const useCalendarStore = () => {
         end: parseISO(ev.end),
       }
     }));
-  }, [calendarEvents]) 
+  }, [calendarEvents]);
   
   return {
     activeEvent,
@@ -68,5 +86,9 @@ export const useCalendarStore = () => {
     startDeleteCalendarEvent,
     serializeEvents,
     deserializeEvents,
+    createNewEvent,
+    fetchEvents,
+    updateEvent,
+    deleteEvent,
   }
 }

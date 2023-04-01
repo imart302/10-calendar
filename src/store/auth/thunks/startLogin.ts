@@ -1,23 +1,19 @@
 import {
   ActionReducerMapBuilder,
-  CaseReducer,
-  createAsyncThunk,
-  PayloadAction,
+  createAsyncThunk
 } from '@reduxjs/toolkit';
 import { login } from '../../../api';
 import { IAuthState, ILoginUser, IUser } from '../../../types';
 import { IUserLogged } from '../../../types/apiResponses';
-import { AppDispatch } from '../../store';
 import { loginReducer } from '../reducers';
 
 export const startLogin = createAsyncThunk<
   IUserLogged,
-  ILoginUser,
-  { dispatch: AppDispatch }
+  ILoginUser
 >('auth/login', async (user: ILoginUser): Promise<IUserLogged> => {
-  //DO LOGIN
-
+  
   const loggedUser = await login(user);
+  console.log(loggedUser);
   return loggedUser;
   
 });
@@ -31,6 +27,12 @@ export const buildStartLogin = (
   });
   builder.addCase(startLogin.fulfilled, loginReducer);
   builder.addCase(startLogin.rejected, (state, action) => {
-    state.error = action.error.message ?? 'Unknwn error';
+    console.log(action);
+    state.state = 'no-auth';
+    state.error = {
+      where: 'login',
+      message: action.error.message ?? 'Unknown error',
+      code: action.error.code ?? 'Unknown error',
+    };
   });
 };

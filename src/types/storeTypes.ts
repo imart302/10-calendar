@@ -14,6 +14,14 @@ export interface ICalendarEventNew {
   };
 }
 
+export interface IEventCreatePayload {
+  title: string;
+  notes: string;
+  start: string;
+  end: string;
+  bgColor: string;
+}
+
 export interface ICalendarEventNewNotSerializable {
   title: string;
   notes: string;
@@ -38,6 +46,8 @@ export interface ICalendarEventNotSerializable
 export interface ICalendarState {
   activeEvent: null | ICalendarEvent;
   events: ICalendarEvent[];
+  status: 'creating' | 'idle' | 'fetching';
+  error: null | string;
 }
 
 export interface ILoginUser {
@@ -51,9 +61,13 @@ export interface IUser {
 }
 export interface IAuthState {
   user: IUser | null;
-  state: 'auth' | 'no-auth' | 'fetching' | 'creating';
+  state: 'auth' | 'no-auth' | 'fetching' | 'creating' | 'created' | 'renew';
   token: string | null;
-  error: string | null;
+  error: null | {
+    where: 'login' | 'register' | 'renew';
+    message: string;
+    code: string;
+  }; 
 }
 
 export interface ICreateUser {

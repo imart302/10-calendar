@@ -11,6 +11,15 @@ export const login = async (user: ILoginUser): Promise<IUserLogged> => {
   return loggedUser;
 };
 
+export const renew = async (): Promise<IUserLogged> => {
+  const path = '/auth/renew';
+  const resp = await calendarApi.get(path);
+  const loggedUser = resp.data as unknown as IUserLogged;
+
+  return loggedUser;
+};
+
+
 export const createUser = async (user: ICreateUser): Promise<IUserCreated> => {
   const path = '/auth/new';
 
@@ -19,3 +28,5 @@ export const createUser = async (user: ICreateUser): Promise<IUserCreated> => {
 
   return newuser;
 };
+
+
