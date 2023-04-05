@@ -1,6 +1,6 @@
-import { ILoginUser, ICreateUser } from '@/types';
-import { calendarApi } from './calendarApi';
+import { ICreateUser, ILoginUser } from '@/types';
 import { IUserCreated, IUserLogged } from '@/types/apiResponses';
+import { calendarApi } from './calendarApi';
 
 export const login = async (user: ILoginUser): Promise<IUserLogged> => {
   const path = '/auth';

@@ -1,13 +1,10 @@
-import { useSelector } from "react-redux";
 import { startRenewToken } from "../store/auth/thunks/startRenewToken";
-import store, { RootState } from "../store/store";
-import { setModalState } from "../store/ui/uiSlice";
-
+import { useAppDispatch, useAppSelector } from "@/store";
 
 export const useAuthStore = () => {
 
-  const auth = useSelector((state: RootState) => state.auth );
-  const dispatch = store.dispatch;
+  const auth = useAppSelector((state) => state.auth );
+  const dispatch = useAppDispatch();
   
   const checkAuthToken = async () => {
     const xToken = localStorage.getItem('x-token');

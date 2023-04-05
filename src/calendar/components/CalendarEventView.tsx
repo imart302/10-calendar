@@ -1,13 +1,10 @@
-import React from 'react'
 import { EventProps } from 'react-big-calendar';
 import { ICalendarEventNotSerializable } from '../../types';
 
 
-export interface ICalendarEventProps extends EventProps<ICalendarEventNotSerializable> {
+export interface ICalendarEventProps extends EventProps<ICalendarEventNotSerializable> {}
 
-}
-
-export const CalendarEventView = (props: ICalendarEventProps) => {
+export const CalendarEventView: React.FC<ICalendarEventProps> = (props) => {
 
   return (
     <div>

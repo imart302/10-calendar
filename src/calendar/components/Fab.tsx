@@ -1,8 +1,8 @@
-import React from 'react'
-import { useUIStore } from '../../hooks'
+import React from 'react';
+import { useUIStore } from '../../hooks';
 import { useCalendarStore } from '../../hooks/useCalendarStore';
 
-export const Fab = () => {
+export const Fab: React.FC = () => {
 
   const { openDateModal } = useUIStore();
   const { setActiveCalendarEvent } = useCalendarStore();

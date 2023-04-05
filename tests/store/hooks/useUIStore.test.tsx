@@ -1,23 +1,15 @@
-import { renderHook, act, configure, waitFor } from '@testing-library/react';
-import { useUIStore } from '../../../src/hooks';
-import { Provider } from 'react-redux';
-import { createTestStore } from '../../fixtures/createTestStore';
+import { act, renderHook } from '@testing-library/react';
 import React from 'react';
-import store from '../../../src/store/store';
+import { Provider } from 'react-redux';
+import { useUIStore } from '../../../src/hooks';
+import { createTestStore } from '../../fixtures/createTestStore';
 
-import { vi } from 'vitest';
-
-vi.mock('../../../src/store/store');
 
 describe('Tests on useUIStore', async () => {
   let mockStore = createTestStore();
 
   beforeEach(() => {
     mockStore = createTestStore();
-
-    //SUPER IMPORTANT FOR MAKE THE RENDER HOOK WORK PROPERLY
-    vi.mocked(store.getState).mockReturnValue(mockStore.getState());
-    vi.mocked(store.dispatch).mockImplementation(mockStore.dispatch);
   });
 
   it('Should return the default values', () => {

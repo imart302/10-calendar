@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { CalendarModal, Fab, Navbar } from '../components';
 import {
-  Calendar as ReactBigCalendar,
   EventPropGetter,
+  Calendar as ReactBigCalendar,
   View,
 } from 'react-big-calendar';
-
+import { CalendarModal, Fab, Navbar } from '../components';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-
 import { localizer, messages } from '../../helpers';
-import { CalendarEventView } from '../components/CalendarEventView';
-import { useUIStore } from '../../hooks';
-import { useCalendarStore } from '../../hooks/useCalendarStore';
+import { useCalendarStore, useUIStore } from '../../hooks';
 import { ICalendarEventNotSerializable } from '../../types';
+import { CalendarEventView } from '../components/CalendarEventView';
 
 export interface ICalendarModalSte {
   lastView: View;
 }
 
-export const Calendar = () => {
+export const Calendar: React.FC<void> = () => {
   const {
     calendarEvents,
     setActiveCalendarEvent,

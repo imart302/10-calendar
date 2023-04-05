@@ -1,29 +1,28 @@
 import { formatISO, parseISO } from 'date-fns';
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 import {
-  startFetchEvents,
   onSetActiveEvent,
   startCreateEvent,
   startDeleteEvent,
+  startFetchEvents,
   startUpdateEvent,
+  useAppDispatch,
+  useAppSelector,
 } from '../store';
-import store, { RootState } from '../store/store';
 import {
   ICalendarEvent,
-  ICalendarEventNotSerializable,
   ICalendarEventNew,
+  ICalendarEventNotSerializable,
 } from '../types';
 
 export const useCalendarStore = () => {
-  const { activeEvent, events: calendarEvents } = useSelector(
-    (state: RootState) => state.calendar
-  );
+  const { activeEvent, events: calendarEvents } = useAppSelector((state) => state.calendar);
+  const dispatch = useAppDispatch();
+
   const [deserializedEvents, setDeserializedEvents] = useState<
     ICalendarEventNotSerializable[]
   >([]);
 
-  const dispatch = store.dispatch;
 
   const setActiveCalendarEvent = (event: ICalendarEvent | null) => {
     dispatch(onSetActiveEvent(event));

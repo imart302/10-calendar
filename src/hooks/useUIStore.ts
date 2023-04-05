@@ -1,13 +1,9 @@
-import { useSelector } from 'react-redux';
 import { setModalState } from '../store/ui/uiSlice';
-import { RootState, store } from '@/store';
+import { useAppDispatch, useAppSelector } from '@/store';
 
 export const useUIStore = () => {
-  const isDateModalOpen = useSelector((state: RootState) => {
-    return state.ui.isModalOpen;
-  });
-
-  const dispatch = store.dispatch;
+  const isDateModalOpen = useAppSelector((state) => state.ui.isModalOpen);
+  const dispatch = useAppDispatch();
 
   const openDateModal = () => {
     dispatch(setModalState(true));

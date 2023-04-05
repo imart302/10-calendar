@@ -1,14 +1,13 @@
-import React, { useEffect, useRef } from 'react';
-import './login.css';
-import { useForm, Resolver } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-import { AppDispatch, RootState } from '../../store/store';
+import { useAppDispatch } from '@/store';
+import { useEffect, useRef } from 'react';
+import { useForm } from 'react-hook-form';
+import Swal from 'sweetalert2';
+import { useAuthStore } from '../../hooks/useAuthStore';
 import { resetError, resetLogin, startLogin } from '../../store/auth';
+import { startRegister } from '../../store/auth/thunks/startRegister';
 import { ICreateUser, ILoginUser } from '../../types';
 import { SimpleSpinner } from '../../ui/components/SimpleSpinner';
-import { useAuthStore } from '../../hooks/useAuthStore';
-import { startRegister } from '../../store/auth/thunks/startRegister';
-import Swal from 'sweetalert2';
+import './login.css';
 
 interface ILoginFormValues {
   email: string;
@@ -22,8 +21,8 @@ interface IRegisterFormValues {
   repeatPass: string;
 }
 
-export const Login = () => {
-  const dispatch = useDispatch<AppDispatch>();
+export const Login : React.FC = () => {
+  const dispatch = useAppDispatch();
   const { auth } = useAuthStore();
   const loginContainer = useRef<HTMLDivElement | null>(null);
   const registerContainer = useRef<HTMLDivElement | null>(null);
@@ -53,12 +52,10 @@ export const Login = () => {
     },
   });
   const onSubmitLogin = handleSubmitLogin((data) => {
-    console.log(data);
     dispatch(startLogin(data as ILoginUser));
   });
 
   const onSubmitRegister = handleSubmitRegister((data) => {
-    console.log(data);
 
     if (data.password !== data.repeatPass) {
       Swal.fire('Las contraseñas no coinciden');
@@ -76,13 +73,11 @@ export const Login = () => {
   });
 
   const handleSwitchToCreateAccount = () => {
-    console.log('handleSwitchCreate');
     registerContainer.current?.classList.add('form-container-register-active');
     loginContainer.current?.classList.remove('form-container-login-active');
   };
 
   const handleSwitchToLogin = () => {
-    console.log('handleSwitchLogin');
     registerContainer.current?.classList.remove(
       'form-container-register-active'
     );

@@ -1,8 +1,8 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { authReducer, authInitial } from './auth';
-import { caledarReducer, calendarInitial } from './calendar';
-import { uiReducer, uiInitial } from './ui';
 import { IRootState } from '@/types';
+import { configureStore } from '@reduxjs/toolkit';
+import { authInitial, authReducer } from './auth';
+import { caledarReducer, calendarInitial } from './calendar';
+import { uiInitial, uiReducer } from './ui';
 
 const initialState : IRootState = { 
   auth: authInitial,

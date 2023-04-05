@@ -1,11 +1,11 @@
 import { addHours, differenceInSeconds, parseISO } from 'date-fns';
 import es from 'date-fns/locale/es';
 import React, { useEffect, useMemo } from 'react';
-import Modal from 'react-modal';
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import Modal from 'react-modal';
 import Swal from 'sweetalert2';
-import { useUIStore, useCalendarStore, useAuthStore } from '../../hooks';
+import { useAuthStore, useCalendarStore, useUIStore } from '../../hooks';
 import { ICalendarEvent, ICalendarEventNew } from '../../types';
 
 import 'sweetalert2/dist/sweetalert2.min.css';
@@ -36,7 +36,7 @@ export interface CalendarModalSte {
   formSubmitted: boolean;
 }
 
-export const CalendarModal = () => {
+export const CalendarModal: React.FC = () => {
   const { isDateModalOpen, openDateModal, closeDateModal } = useUIStore();
   const {
     activeEvent,

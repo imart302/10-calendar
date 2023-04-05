@@ -1,11 +1,10 @@
+import { useAuthStore } from '@/hooks';
+import { resetLogin, useAppDispatch } from '@/store';
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { resetLogin } from '../../store/auth';
-import store, { RootState } from '../../store/store';
 
-export const Navbar = () => {
-  const auth = useSelector((state: RootState) => state.auth);
-  const dispatch = store.dispatch;
+export const Navbar: React.FC = () => {
+  const { auth } = useAuthStore();
+  const dispatch = useAppDispatch();
   
   const handleLogout = () => {
     dispatch(resetLogin());
