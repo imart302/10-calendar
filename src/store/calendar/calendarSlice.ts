@@ -20,7 +20,7 @@ const initialState: ICalendarState = {
   status: 'idle',
 };
 
-const calendarSlice = createSlice({
+export const calendarSlice = createSlice({
   name: 'calendar',
   initialState,
   reducers: {
@@ -42,7 +42,7 @@ const calendarSlice = createSlice({
   },
 });
 
-export const calendarInitState = calendarSlice.getInitialState();
+export const calendarInitial = calendarSlice.getInitialState();
 export const {
   onSetActiveEvent,
   addNewEvent,

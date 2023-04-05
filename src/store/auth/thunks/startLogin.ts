@@ -24,7 +24,6 @@ export const buildStartLogin = (
   builder.addCase(startLogin.pending, (state) => {
     state.state = 'fetching';
   });
-  builder.addCase(startLogin.fulfilled, loginReducer);
   builder.addCase(startLogin.rejected, (state, action) => {
     state.state = 'no-auth';
     state.error = {
@@ -33,4 +32,6 @@ export const buildStartLogin = (
       code: action.error.code ?? 'Unknown error',
     };
   });
+
+  builder.addCase(startLogin.fulfilled, loginReducer);
 };

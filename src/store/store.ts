@@ -1,8 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { authReducer } from './auth';
+import { authReducer, authInitial } from './auth';
+import { caledarReducer, calendarInitial } from './calendar';
+import { uiReducer, uiInitial } from './ui';
+import { IRootState } from '@/types';
 
-import { caledarReducer } from './calendar';
-import { uiReducer } from './ui';
+const initialState : IRootState = { 
+  auth: authInitial,
+  calendar: calendarInitial,
+  ui: uiInitial,
+}
 
 const store = configureStore({
 
@@ -11,13 +17,10 @@ const store = configureStore({
     calendar: caledarReducer,
     auth: authReducer,
   },
+  preloadedState: initialState
 });
 
-
-
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>;
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatch = typeof store.dispatch;
-
 export default store;
+
+
+

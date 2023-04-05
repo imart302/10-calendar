@@ -59,6 +59,14 @@ export interface IUser {
   _id: string;
   name: string;
 }
+
+export enum AuthStatesEnum {
+  Auth = 'auth',
+  NoAuth = 'no-auth',
+  Creating = 'creating',
+  Created = 'created',
+  Renew = 'renew',
+}
 export interface IAuthState {
   user: IUser | null;
   state: 'auth' | 'no-auth' | 'fetching' | 'creating' | 'created' | 'renew';
@@ -74,4 +82,10 @@ export interface ICreateUser {
   email: string,
   password: string,
   username: string,
+}
+
+export interface IRootState {
+  ui: IUIState,
+  calendar: ICalendarState,
+  auth: IAuthState
 }

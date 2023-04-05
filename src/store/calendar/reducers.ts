@@ -14,7 +14,6 @@ export const addNewEventReducer: CaseReducer<
   ICalendarState,
   PayloadAction<ICalendarEvent>
 > = (state, action) => {
-  console.log(action.payload);
   state.status = 'idle';
   state.events.push(action.payload);
 };

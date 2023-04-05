@@ -5,7 +5,7 @@ import {
   ICreateUser,
   IUserCreated,
 } from '../../../types';
-import { AppDispatch } from '../../store';
+import { AppDispatch } from '@/store';
 
 
 export const startRegister = createAsyncThunk<

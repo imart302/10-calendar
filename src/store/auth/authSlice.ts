@@ -12,7 +12,7 @@ const initialState : IAuthState = {
 }
 
 
-const authSlice = createSlice({
+export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
@@ -29,5 +29,6 @@ const authSlice = createSlice({
 });
 
 
+export const authInitial = authSlice.getInitialState();
 export const { login, resetLogin, resetError } = authSlice.actions
 export const authReducer =  authSlice.reducer

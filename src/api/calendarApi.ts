@@ -1,5 +1,6 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { getEnvVariables } from '../helpers';
+import { ApiError } from './ApiErrors';
 
 const { VITE_API_URL } = getEnvVariables();
 
@@ -16,8 +17,18 @@ calendarApi.interceptors.response.use(
   (response) => {
     return response;
   },
-  (response) => {
-    
+  (error: AxiosError) => {
+    throw new ApiError(
+      {
+        xToken: error.config?.headers['x-token'] ?? 'None',
+        Accept: error.config?.headers.Accept?.toString() ?? 'None',
+      },
+      error.response?.status,
+      error.message,
+      error.config?.baseURL,
+      error.config?.method,
+      error.config?.url,
+      error.stack,
+    );
   }
 );
-

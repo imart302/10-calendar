@@ -47,6 +47,7 @@ describe('Test on startLogin Thunk', () => {
     prom.abort();
   });
 
+  //this should be should call th respective reducer!!!!;
   it('Should set the user in auth.user, set auth.status to auth and save the token in localStorage unde x-token', async () => {
     const initialState = testStore.getState();
 

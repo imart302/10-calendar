@@ -5,8 +5,7 @@ const initialState: IUIState = {
   isModalOpen: false,
 }
 
-
-const uiSlice = createSlice({
+export const uiSlice = createSlice({
   name: 'ui',
   initialState,
   reducers: {
@@ -18,5 +17,5 @@ const uiSlice = createSlice({
 
 
 export const { setModalState } = uiSlice.actions;
-export const uiInitState = uiSlice.getInitialState();
+export const uiInitial = uiSlice.getInitialState();
 export const uiReducer = uiSlice.reducer;
