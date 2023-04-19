@@ -4,6 +4,7 @@ import { Navigate, Routes } from 'react-router-dom';
 import { Login } from '../auth';
 import { Calendar } from '../calendar';
 import { useAuthStore } from '../hooks/useAuthStore';
+import { SimpleSpinner } from '@/ui/components/SimpleSpinner';
 
 export const AppRouter = () => {
   const { checkAuthToken, auth: authStatus } = useAuthStore();
@@ -11,6 +12,12 @@ export const AppRouter = () => {
   useEffect(() => {
     checkAuthToken();
   }, []);
+
+  if(authStatus.state === 'renew') {
+    return (
+      <SimpleSpinner />
+    )
+  }
 
   return (
     <Routes>

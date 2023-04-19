@@ -23,7 +23,7 @@ calendarApi.interceptors.response.use(
         xToken: error.config?.headers['x-token'] ?? 'None',
         Accept: error.config?.headers.Accept?.toString() ?? 'None',
       },
-      error.response?.status,
+      error.response?.status.toString(),
       error.message,
       error.config?.baseURL,
       error.config?.method,

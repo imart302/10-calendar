@@ -3,7 +3,7 @@ export interface IApiError<H> extends Error {
   baseURL: string;
   method: string;
   url: string;
-  code: number;
+  code: string;
   header: H;
 }
 
@@ -17,15 +17,16 @@ export class ApiError implements IApiError<IApiErrorHeader> {
   baseURL: string;
   method: string;
   url: string;
-  code: number;
+  code: string;
   header: IApiErrorHeader;
   name: string = 'API ERROR';
   stack?: string | undefined;
   cause?: unknown;
+  
 
   constructor(
     header: IApiErrorHeader,
-    code = 500,
+    code: string = "500",
     message: string = '',
     baseUrl: string = '',
     method: string = '',
@@ -42,4 +43,6 @@ export class ApiError implements IApiError<IApiErrorHeader> {
     this.stack = stack;
     this.cause = cause;
   }
+
+  
 }

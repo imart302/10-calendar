@@ -92,7 +92,7 @@ export const Login : React.FC = () => {
     }
 
     if (auth.error) {
-      if (auth.error.where === 'login') {
+      if (auth.error.code = '400') {
         Swal.fire('Email o password incorrectos').then(() => {
           dispatch(resetError());
         });
@@ -119,7 +119,7 @@ export const Login : React.FC = () => {
   }
 
   return (
-    <div className="main-container">
+    <div aria-label='login main container' className="main-container">
       {/* LOGIN */}
       <div
         ref={loginContainer}

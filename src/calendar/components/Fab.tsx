@@ -13,7 +13,7 @@ export const Fab: React.FC = () => {
   }
 
   return (
-    <button className='btn btn-primary fab' onClick={handleClickNew}> 
+    <button aria-label='fab button' className='btn btn-primary fab' onClick={handleClickNew}> 
       <i className='fas fa-plus'></i>
     </button>
   )

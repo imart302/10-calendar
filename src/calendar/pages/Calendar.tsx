@@ -15,7 +15,7 @@ export interface ICalendarModalSte {
   lastView: View;
 }
 
-export const Calendar: React.FC<void> = () => {
+export const Calendar: React.FC = () => {
   const {
     calendarEvents,
     setActiveCalendarEvent,

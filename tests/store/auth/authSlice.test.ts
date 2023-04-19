@@ -34,7 +34,7 @@ describe('Test on authSlice reducers', () => {
 
     const state = authSlice.reducer(errorState, resetError());
 
-    console.log(state);
+    
     expect(state.error).toBe(null);
   });
 

@@ -43,4 +43,23 @@ describe('Tests on useUIStore', async () => {
     expect(initial).toBe(false);
     expect(result.current.isDateModalOpen).toBe(true);
   });
+
+  it('Should set the isDateModalOpen to false', () => {
+    const { result } = renderHook(() => useUIStore(), {
+      wrapper: ({ children }) => (
+        <Provider store={mockStore}>{children}</Provider>
+      ),
+    });
+
+    const initial = result.current.isDateModalOpen;
+    const { openDateModal, closeDateModal } = result.current;
+
+    act(() => {
+      openDateModal();
+      closeDateModal();
+    });
+
+    expect(initial).toBe(false);
+    expect(result.current.isDateModalOpen).toBe(false);
+  });
 });

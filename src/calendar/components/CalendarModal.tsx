@@ -9,6 +9,7 @@ import { useAuthStore, useCalendarStore, useUIStore } from '../../hooks';
 import { ICalendarEvent, ICalendarEventNew } from '../../types';
 
 import 'sweetalert2/dist/sweetalert2.min.css';
+import { getEnvVariables } from '@/helpers';
 
 const customStyles = {
   content: {
@@ -24,7 +25,8 @@ const customStyles = {
 registerLocale('es', es);
 
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
-Modal.setAppElement('#root');
+
+if(getEnvVariables().TEST !== 'true') Modal.setAppElement('#root');
 
 export interface CalendarModalSte {
   form: {

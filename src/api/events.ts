@@ -42,7 +42,7 @@ export const deleteEvent = async (event: ICalendarEvent) => {
   const path = `/events/${event._id}`;
 
   const resp = await calendarApi.delete(path);
-  console.log(resp);
+  
   const body = resp.data.event as unknown as ICalendarDeleteEvent;
 
   return body;

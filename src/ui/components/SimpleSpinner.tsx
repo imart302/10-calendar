@@ -8,5 +8,5 @@ interface SpinnerProps {
 
 export const SimpleSpinner: React.FC<SpinnerProps> = ({ size = 24, color = 'gray' }) => {
 
-  return <div className='simple-spinner'></div>;
+  return <div aria-label='simple spinner' className='simple-spinner'></div>;
 };

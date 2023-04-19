@@ -1,3 +1,5 @@
+import { SerializedError } from "@reduxjs/toolkit";
+
 export interface IUIState {
   isModalOpen: boolean;
 }
@@ -75,7 +77,7 @@ export interface IAuthState {
     where: 'login' | 'register' | 'renew';
     message: string;
     code: string;
-  }; 
+  } | SerializedError; 
 }
 
 export interface ICreateUser {
